@@ -1,6 +1,5 @@
 /**
- * watch.js recorder
- * Created by omelich on 28.11.2014.
+ * gazer.js recorder
  */
 (function () {
     $(function () {
@@ -23,7 +22,7 @@
         };
         watch.utils = {
             /**
-             * Получить timestamp
+             * Get timestam
              * @returns {number}
              */
             getTimestamp: function () {
@@ -34,7 +33,7 @@
                 }
             },
             /**
-             * Получить длинну строки в байтах
+             * Get string length in bytes
              * @param str
              * @returns {number}
              */
@@ -60,7 +59,7 @@
             }
         };
         /**
-         * Вырезать кадры
+         * Cut frames
          * @param start
          * @param end
          * @returns {Array.<T>}
@@ -77,7 +76,7 @@
         };
         watch.frames = [];
         /**
-         * Запись кадра
+         * Add a rame
          * @param e событие
          */
         watch.pushFrame = function (e) {
@@ -85,7 +84,7 @@
         };
 
         /**
-         * События
+         * Events
          */
         watch.pushFrame({
             event: 'init',
@@ -94,7 +93,7 @@
         });
 
         /**
-         * Движение мыши
+         * Mouse move
          */
         $(window).on('mousemove', function (e) {
             watch.properties.pageX = e.pageX;
@@ -102,13 +101,13 @@
             return true;
         });
         /**
-         * Скролл окна
+         * Window scoll
          */
         $(document).on('scroll', function () {
             watch.properties.scrollTop = $(document).scrollTop();
             watch.properties.scrollLeft = $(document).scrollLeft();
             /**
-             * Запишем кадр с событием типа scroll
+             * Add a frame with 'scroll' event
              */
             watch.pushFrame({
                 event: 'scroll',
@@ -121,11 +120,11 @@
             return true;
         });
         /**
-         * Клик
+         * Mouse click
          */
         $(document).on('mousedown', function (e) {
             /**
-             * Запишем кадр с событием типа scroll
+             * Add a frame with 'click' event
              */
             watch.pushFrame({
                 event: 'click',
@@ -133,17 +132,17 @@
             });
         });
         /**
-         * Кнопка
+         * Key down
          */
         $(document).on('keydown', function (e) {
             /**
-             * Не пишем пароли
+             * Do not track passwords
              */
             if ($(e.target).prop('type') === "password") {
                 return true;
             }
             /**
-             * Запишем кадр с событием типа scroll
+             * Add a frame with 'keypress' event
              */
             watch.pushFrame({
                 event: 'keypress',
@@ -155,7 +154,7 @@
             });
         });
         /**
-         * Анализ движения мыши
+         * Mouse movement analytics
          */
         var mouse = {
             x: watch.properties.pageX,
@@ -171,7 +170,7 @@
                     mouse.x = watch.properties.pageX;
                     mouse.y = watch.properties.pageY;
                     /**
-                     * Запишем кадр с событием типа scroll
+                     * Add a frame with 'mousemove' event
                      */
                     watch.pushFrame({
                         event: 'mousemove',
@@ -187,24 +186,24 @@
             300
         );
         /**
-         * Чтение кадров
+         * Read frames
          */
         var state = watch.frames.length,
             readState = setInterval(function () {
                 if (watch.frames.length != state) {
                     /**
-                     * Текущее состояние
+                     * Get & log state
                      */
                     var frames = JSON.stringify(watch.frames);
                     console.log(watch.utils.getByteLength(frames), frames);
                     state = watch.frames.length;
                     /**
-                     * Получить 10 кадров
+                     * Cut 10 frames
                      */
                     //var cutFrames = JSON.stringify(watch.cutFrames(0, 10));
                     //console.log('cut 10 frames', cutFrames);
                     /**
-                     * @todo: отправить кадры на сервер
+                     * @todo: send frames to server
                      */
                 }
 
