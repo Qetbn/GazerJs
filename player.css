@@ -1,0 +1,17 @@
+#watch-player {
+    position: relative;
+}
+#watch-player iframe {
+    border: 1px solid #000;
+    width: 640px;
+    height: 480px;
+}
+#watch-player-mouse {
+    display: block;
+    position: absolute;
+    border: 1px solid #000;
+    height:15px;
+    width: 15px;
+    border-radius: 50%;
+    background: red;
+}
