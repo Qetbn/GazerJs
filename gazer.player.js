@@ -28,7 +28,7 @@ $(function () {
             element: null
         },
         window: {
-            element:$('#watch-player iframe:eq(0)'),
+            element: $('#watch-player iframe:eq(0)'),
             resize: function (w, h) {
                 this.element.css({
                     width: w,
@@ -41,9 +41,9 @@ $(function () {
             }
         }
     };
-    try{
+    try {
         watchPlayer.frames = JSON.parse(history);
-    } catch(e) {
+    } catch (e) {
         console.log(e);
         return false;
     }
@@ -67,9 +67,14 @@ $(function () {
 
     var filmLoop = setInterval(function () {
         /*for (var i = 0; i < watchPlayer.frames.length - 1; i++) {
-            var frame =watchPlayer.frames[i];
-            console.log(frame);
-        }*/
+         var frame =watchPlayer.frames[i];
+         console.log(frame);
+         }*/
+        /**
+         * @todo:
+         * With first frame we set global timer
+         * On each tick of filmLoop we detect what's going on right now and
+         * send actions via watchPlayer.actions.
+         */
     }, 50);
 });
-
