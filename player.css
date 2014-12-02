@@ -9,9 +9,14 @@
 #watch-player-mouse {
     display: block;
     position: absolute;
-    border: 1px solid #000;
+    border: 1px solid #333;
     height:15px;
     width: 15px;
     border-radius: 50%;
-    background: red;
+    padding: 10px;
+    background: url('img/cursor.png') no-repeat #F0E895 50% 50%;
+    transition: all 1s ease;
+}
+#history {
+    display: none;
 }
