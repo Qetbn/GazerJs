@@ -3,12 +3,12 @@
  */
 (function () {
     $(function () {
-        var watch = {},
-            script = $('#page-watch-script');
+        var gazer = {},
+            script = $('#page-gazer-script');
         /**
-         * Запишем свойства окна в объект
+         * Window propperties
          */
-        watch.properties = {
+        gazer.properties = {
             url: $(location).attr('href'),
             height: $(window).height(),
             width: $(window).height(),
@@ -20,7 +20,7 @@
             minMouseMove: 5,
             uid: script.data('uid')
         };
-        watch.utils = {
+        gazer.utils = {
             /**
              * Get timestam
              * @returns {number}
@@ -64,57 +64,57 @@
          * @param end
          * @returns {Array.<T>}
          */
-        watch.cutFrames = function (start, end) {
+        gazer.cutFrames = function (start, end) {
             if (typeof end === "undefined")
                 var end = 10;
-            if (end > watch.frames.length - 1) {
-                end = watch.frames.length - 1;
+            if (end > gazer.frames.length - 1) {
+                end = gazer.frames.length - 1;
             }
-            var result = watch.frames.slice(start, end);
-            watch.frames.splice(start, end);
+            var result = gazer.frames.slice(start, end);
+            gazer.frames.splice(start, end);
             return result;
         };
-        watch.frames = [];
+        gazer.frames = [];
         /**
          * Add a rame
          * @param e событие
          */
-        watch.pushFrame = function (e) {
-            watch.frames.push(e);
+        gazer.pushFrame = function (e) {
+            gazer.frames.push(e);
         };
 
         /**
          * Events
          */
-        watch.pushFrame({
+        gazer.pushFrame({
             event: 'init',
-            date: watch.utils.getTimestamp(),
-            data: watch.properties
+            date: gazer.utils.getTimestamp(),
+            data: gazer.properties
         });
 
         /**
          * Mouse move
          */
         $(window).on('mousemove', function (e) {
-            watch.properties.pageX = e.pageX;
-            watch.properties.pageY = e.pageY;
+            gazer.properties.pageX = e.pageX;
+            gazer.properties.pageY = e.pageY;
             return true;
         });
         /**
          * Window scoll
          */
         $(document).on('scroll', function () {
-            watch.properties.scrollTop = $(document).scrollTop();
-            watch.properties.scrollLeft = $(document).scrollLeft();
+            gazer.properties.scrollTop = $(document).scrollTop();
+            gazer.properties.scrollLeft = $(document).scrollLeft();
             /**
              * Add a frame with 'scroll' event
              */
-            watch.pushFrame({
+            gazer.pushFrame({
                 event: 'scroll',
-                date: watch.utils.getTimestamp(),
+                date: gazer.utils.getTimestamp(),
                 data: {
-                    scrollTop: watch.properties.scrollTop,
-                    scrollLeft: watch.properties.scrollLeft
+                    scrollTop: gazer.properties.scrollTop,
+                    scrollLeft: gazer.properties.scrollLeft
                 }
             });
             return true;
@@ -126,9 +126,9 @@
             /**
              * Add a frame with 'click' event
              */
-            watch.pushFrame({
+            gazer.pushFrame({
                 event: 'click',
-                date: watch.utils.getTimestamp()
+                date: gazer.utils.getTimestamp()
             });
         });
         /**
@@ -144,9 +144,9 @@
             /**
              * Add a frame with 'keypress' event
              */
-            watch.pushFrame({
+            gazer.pushFrame({
                 event: 'keypress',
-                date: watch.utils.getTimestamp(),
+                date: gazer.utils.getTimestamp(),
                 data: {
                     keyCode: e.keyCode,
                     char: e.Char
@@ -157,24 +157,24 @@
          * Mouse movement analytics
          */
         var mouse = {
-            x: watch.properties.pageX,
-            y: watch.properties.pageY
+            x: gazer.properties.pageX,
+            y: gazer.properties.pageY
         };
         var checkMouseMoves = setInterval(function () {
                 if (
-                    mouse.x - watch.properties.pageX >= watch.properties.minMouseMove ||
-                    watch.properties.pageX - mouse.x >= watch.properties.minMouseMove ||
-                    mouse.y - watch.properties.pageY >= watch.properties.minMouseMove ||
-                    watch.properties.pageY - mouse.y >= watch.properties.minMouseMove
+                    mouse.x - gazer.properties.pageX >= gazer.properties.minMouseMove ||
+                    gazer.properties.pageX - mouse.x >= gazer.properties.minMouseMove ||
+                    mouse.y - gazer.properties.pageY >= gazer.properties.minMouseMove ||
+                    gazer.properties.pageY - mouse.y >= gazer.properties.minMouseMove
                 ) {
-                    mouse.x = watch.properties.pageX;
-                    mouse.y = watch.properties.pageY;
+                    mouse.x = gazer.properties.pageX;
+                    mouse.y = gazer.properties.pageY;
                     /**
                      * Add a frame with 'mousemove' event
                      */
-                    watch.pushFrame({
+                    gazer.pushFrame({
                         event: 'mousemove',
-                        date: watch.utils.getTimestamp(),
+                        date: gazer.utils.getTimestamp(),
                         data: {
                             x: mouse.x,
                             y: mouse.y
@@ -188,23 +188,15 @@
         /**
          * Read frames
          */
-        var state = watch.frames.length,
+        var state = gazer.frames.length,
             readState = setInterval(function () {
-                if (watch.frames.length != state) {
+                if (gazer.frames.length != state) {
                     /**
                      * Get & log state
                      */
-                    var frames = JSON.stringify(watch.frames);
-                    console.log(watch.utils.getByteLength(frames), frames);
-                    state = watch.frames.length;
-                    /**
-                     * Cut 10 frames
-                     */
-                    //var cutFrames = JSON.stringify(watch.cutFrames(0, 10));
-                    //console.log('cut 10 frames', cutFrames);
-                    /**
-                     * @todo: send frames to server
-                     */
+                    var frames = JSON.stringify(gazer.frames);
+                    console.log(gazer.utils.getByteLength(frames), frames);
+                    state = gazer.frames.length;
                 }
 
             }, 1000);
