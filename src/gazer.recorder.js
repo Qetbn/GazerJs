@@ -2,15 +2,17 @@
  * gazer.js core
  */
 var gazer = {};
+gazer.recorder = {};
 /**
  * Window propperties
  */
-gazer.properties = {};
+gazer.recorder.properties = {};
 /**
  * Init windows props
  */
-gazer.initProperties = function () {
-    gazer.properties = {
+gazer.recorder.initProperties = function () {
+    var script = $('#page-gazer-script');
+    gazer.recorder.properties = {
         url: $(location).attr('href'),
         height: $(window).height(),
         width: $(window).height(),
@@ -30,22 +32,22 @@ gazer.initProperties = function () {
  * @param end
  * @returns {Array.<T>}
  */
-gazer.cutFrames = function (start, end) {
+gazer.recorder.cutFrames = function (start, end) {
     if (typeof end === "undefined")
         var end = 10;
-    if (end > gazer.frames.length - 1) {
-        end = gazer.frames.length - 1;
+    if (end > gazer.recorder.frames.length - 1) {
+        end = gazer.recorder.frames.length - 1;
     }
-    var result = gazer.frames.slice(start, end);
-    gazer.frames.splice(start, end);
+    var result = gazer.recorder.frames.slice(start, end);
+    gazer.recorder.frames.splice(start, end);
     return result;
 };
-gazer.frames = [];
+gazer.recorder.frames = [];
 /**
  * Add a rame
  * @param e событие
  */
-gazer.pushFrame = function (e) {
-    gazer.frames.push(e);
+gazer.recorder.pushFrame = function (e) {
+    gazer.recorder.frames.push(e);
 };
 

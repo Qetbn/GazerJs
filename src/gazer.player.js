@@ -20,11 +20,16 @@ gazer.player.properties = {};
  * @type {{player: (*|jQuery|HTMLElement), mouse: {create: Function, move: Function, destroy: Function, element: null}, window: {element: (*|jQuery|HTMLElement), resize: Function, destroy: Function}}}
  */
 gazer.player.ui = {
-    player: $('#watch-player'),
+    player: {
+        init: function () {
+            this.element = $('#watch-player');
+        },
+        element: null
+    },
     mouse: {
-        create: function () {
+        init: function () {
             this.element = $('<div id="watch-player-mouse"/>');
-            this.element.appendTo(gazer.player.ui.player);
+            this.element.appendTo(gazer.player.ui.player.element);
             return true;
         },
         move: function (x, y) {
@@ -66,7 +71,8 @@ gazer.player.actions = {
         /**
          * Init UI
          */
-        gazer.player.ui.mouse.create();
+        gazer.player.ui.player.init();
+        gazer.player.ui.mouse.init();
     },
     mousemove: function (params) {
         console.log('mousemove', params);
@@ -98,12 +104,12 @@ gazer.player.actions = {
     cutFramesByDelta: function () {
         var delta = gazer.player.current.delta;
         var time = gazer.player.current.time;
-        var minNextTick  = time - delta;
-        for(var i = 0; i < gazer.player.frames.length; i++) {
+        var minNextTick = time - delta;
+        for (var i = 0; i < gazer.player.frames.length; i++) {
             var frame = gazer.player.frames[i];
             frame.date = parseInt(frame.date, 10);
             if (minNextTick >= frame.date) {
-                gazer.player.frames.splice(0, i+1);
+                gazer.player.frames.splice(0, i + 1);
             }
         }
         this.tick();
@@ -113,7 +119,7 @@ gazer.player.actions = {
 
 $(function () {
     var history = $('#history').text();
-        script = $('#page-watch-script');
+    script = $('#page-watch-script');
     /**
      * Parse frames
      */

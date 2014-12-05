@@ -1,40 +1,38 @@
 
 $(function () {
-    var script = $('#page-gazer-script');
-
     /**
      * Initial step
      */
-    gazer.initProperties();
-    gazer.pushFrame({
+    gazer.recorder.initProperties();
+    gazer.recorder.pushFrame({
         event: 'init',
         date: gazer.utils.getTimestamp(),
-        data: gazer.properties
+        data: gazer.recorder.properties
     });
 
     /**
      * Mouse move
      */
     $(window).on('mousemove', function (e) {
-        gazer.properties.pageX = e.pageX;
-        gazer.properties.pageY = e.pageY;
+        gazer.recorder.properties.pageX = e.pageX;
+        gazer.recorder.properties.pageY = e.pageY;
         return true;
     });
     /**
      * Window scoll
      */
     $(document).on('scroll', function () {
-        gazer.properties.scrollTop = $(document).scrollTop();
-        gazer.properties.scrollLeft = $(document).scrollLeft();
+        gazer.recorder.properties.scrollTop = $(document).scrollTop();
+        gazer.recorder.properties.scrollLeft = $(document).scrollLeft();
         /**
          * Add a frame with 'scroll' event
          */
-        gazer.pushFrame({
+        gazer.recorder.pushFrame({
             event: 'scroll',
             date: gazer.utils.getTimestamp(),
             data: {
-                scrollTop: gazer.properties.scrollTop,
-                scrollLeft: gazer.properties.scrollLeft
+                scrollTop: gazer.recorder.properties.scrollTop,
+                scrollLeft: gazer.recorder.properties.scrollLeft
             }
         });
         return true;
@@ -46,7 +44,7 @@ $(function () {
         /**
          * Add a frame with 'click' event
          */
-        gazer.pushFrame({
+        gazer.recorder.pushFrame({
             event: 'click',
             date: gazer.utils.getTimestamp()
         });
@@ -64,7 +62,7 @@ $(function () {
         /**
          * Add a frame with 'keypress' event
          */
-        gazer.pushFrame({
+        gazer.recorder.pushFrame({
             event: 'keypress',
             date: gazer.utils.getTimestamp(),
             data: {
@@ -77,22 +75,22 @@ $(function () {
      * Mouse movement analytics
      */
     var mouse = {
-        x: gazer.properties.pageX,
-        y: gazer.properties.pageY
+        x: gazer.recorder.properties.pageX,
+        y: gazer.recorder.properties.pageY
     };
     var checkMouseMoves = setInterval(function () {
             if (
-                mouse.x - gazer.properties.pageX >= gazer.properties.minMouseMove ||
-                gazer.properties.pageX - mouse.x >= gazer.properties.minMouseMove ||
-                mouse.y - gazer.properties.pageY >= gazer.properties.minMouseMove ||
-                gazer.properties.pageY - mouse.y >= gazer.properties.minMouseMove
+                mouse.x - gazer.recorder.properties.pageX >= gazer.recorder.properties.minMouseMove ||
+                gazer.recorder.properties.pageX - mouse.x >= gazer.recorder.properties.minMouseMove ||
+                mouse.y - gazer.recorder.properties.pageY >= gazer.recorder.properties.minMouseMove ||
+                gazer.recorder.properties.pageY - mouse.y >= gazer.recorder.properties.minMouseMove
             ) {
-                mouse.x = gazer.properties.pageX;
-                mouse.y = gazer.properties.pageY;
+                mouse.x = gazer.recorder.properties.pageX;
+                mouse.y = gazer.recorder.properties.pageY;
                 /**
                  * Add a frame with 'mousemove' event
                  */
-                gazer.pushFrame({
+                gazer.recorder.pushFrame({
                     event: 'mousemove',
                     date: gazer.utils.getTimestamp(),
                     data: {
@@ -108,15 +106,15 @@ $(function () {
     /**
      * Read frames
      */
-    var state = gazer.frames.length,
+    var state = gazer.recorder.frames.length,
         readState = setInterval(function () {
-            if (gazer.frames.length != state) {
+            if (gazer.recorder.frames.length != state) {
                 /**
                  * Get & log state
                  */
-                var frames = JSON.stringify(gazer.frames);
+                var frames = JSON.stringify(gazer.recorder.frames);
                 console.log(gazer.utils.getByteLength(frames), frames);
-                state = gazer.frames.length;
+                state = gazer.recorder.frames.length;
             }
 
         }, 1000);
