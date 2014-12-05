@@ -1,0 +1,15 @@
+{
+    "name": "gazerjs",
+    "description": "User action tracking library",
+    "version": "0.1",
+    "dependencies": {
+        "jquery": "2.1.1"
+    },
+    "licenses": [
+        {
+            "name": "MIT",
+            "url": "http://opensource.org/licenses/MIT"
+        }
+    ],
+    "homepage": "https://github.com/Qetbn/gazerjs"
+}
