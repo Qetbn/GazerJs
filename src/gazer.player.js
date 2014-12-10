@@ -133,7 +133,7 @@ $(function () {
     var tick = 0;
     var filmLoop = setInterval(function () {
         var frame = gazer.player.frames[0];
-        if (typeof frame.event === "undefined") {
+        if (typeof frame === "undefined" || typeof frame.event === "undefined") {
             clearInterval(filmLoop);
             return true;
         }
