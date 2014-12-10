@@ -1,7 +1,6 @@
 /**
- * gazer.js core
+ * gazer.js records
  */
-var gazer = {};
 gazer.recorder = {};
 /**
  * Window propperties
