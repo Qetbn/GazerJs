@@ -38,5 +38,17 @@ gazer.utils = {
             }
         }
         return count;
+    },
+    /**
+     * Translate coords
+     * @param sizesFrom
+     * @param coordsFrom
+     * @param sizesTo
+     */
+    translateCoords: function (sizesFrom, coordsFrom, sizesTo) {
+        var coordsNew = {
+            x: sizesTo.width * coordsFrom.x / sizesFrom.width,
+            y: sizesTo.height * coordsFrom.y / sizesFrom.height
+        };
     }
 };

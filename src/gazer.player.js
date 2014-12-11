@@ -8,7 +8,8 @@ gazer.player = {};
  * * @type {{}}
  */
 gazer.player.current = {
-    time: parseInt(gazer.utils.getTimestamp(), 10)
+    time: parseInt(gazer.utils.getTimestamp(), 10),
+    status: "stop"
 };
 /**
  * Properties containes user windows params
@@ -23,6 +24,7 @@ gazer.player.ui = {
     player: {
         init: function () {
             this.element = $('#watch-player');
+            gazer.player.current.status = "play";
         },
         element: null
     },
@@ -45,7 +47,20 @@ gazer.player.ui = {
         element: null
     },
     window: {
-        element: $('#watch-player iframe:eq(0)'),
+        element: false,
+        init: function (cb) {
+            this.element = $('#watch-player iframe:eq(0)');
+            this.loadUrl(gazer.player.properties.url);
+            /**
+             * Perform callback if specified
+             */
+            if (typeof cb === "function") {
+                this.element.load(cb);
+            }
+        },
+        loadUrl: function (url) {
+            this.element.attr('src', url);
+        },
         resize: function (w, h) {
             this.element.css({
                 width: w,
@@ -71,11 +86,20 @@ gazer.player.actions = {
         /**
          * Init UI
          */
-        gazer.player.ui.player.init();
-        gazer.player.ui.mouse.init();
+        gazer.player.ui.window.init(function(){
+            setTimeout(function(){
+                gazer.player.ui.player.init();
+                gazer.player.ui.mouse.init();
+            }, 2000);
+
+        });
+
     },
     mousemove: function (params) {
         console.log('mousemove', params);
+        /**
+         * @todo: translate mouse coords via gazer.utils.translateCoords()
+         */
         gazer.player.ui.mouse.move(params.data.x, params.data.y);
         this.tick();
     },
@@ -135,6 +159,9 @@ $(function () {
         var frame = gazer.player.frames[0];
         if (typeof frame === "undefined" || typeof frame.event === "undefined") {
             clearInterval(filmLoop);
+            return true;
+        }
+        if (gazer.player.current.status !== "play" && frame.event != "init") {
             return true;
         }
         gazer.player.actions[frame.event](frame);
