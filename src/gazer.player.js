@@ -26,6 +26,7 @@ gazer.player.ui = {
         init: function () {
             this.element = $('#watch-player');
             this.element.addClass('loading');
+            return true;
         },
         element: null
     },
@@ -60,9 +61,11 @@ gazer.player.ui = {
                 gazer.player.actions.contentLoaded();
                 this.element.on('load', cb);
             }
+            return true;
         },
         loadUrl: function (url) {
-            this.element.attr('src', url);//.get(0).contentDocument.location.reload(true);
+            this.element.attr('src', url);
+            return true;
         },
         resize: function (w, h) {
             this.element.css({
@@ -73,7 +76,9 @@ gazer.player.ui = {
         },
         destroy: function () {
             this.element.detach();
-        }
+            return true;
+        },
+        scroll: function(x,y) {}
     }
 };
 
@@ -94,7 +99,7 @@ gazer.player.actions = {
             gazer.player.actions.play();
             gazer.player.ui.mouse.init();
         });
-
+        return true;
     },
     mousemove: function (params) {
         console.log('mousemove', params);
@@ -103,18 +108,22 @@ gazer.player.actions = {
          */
         gazer.player.ui.mouse.move(params.data.x, params.data.y);
         this.tick();
+        return true;
     },
     click: function (params) {
         console.log('click', params);
         this.tick();
+        return true;
     },
     keypress: function (params) {
         console.log('keypress', params);
         this.tick();
+        return true;
     },
     scroll: function (params) {
         console.log('scroll', params);
         this.tick();
+        return true;
     },
     setTickTime: function (date) {
         gazer.player.current.filmTime = date;
@@ -152,6 +161,7 @@ gazer.player.actions = {
     contentLoaded: function() {
         gazer.player.ui.player.element.removeClass("loading");
         gazer.player.current.contentLoaded = true;
+        return true;
     }
 };
 
@@ -182,5 +192,6 @@ $(function () {
         gazer.player.actions[frame.event](frame);
         gazer.player.actions.cutFramesByDelta();
         tick++;
+        return true;
     }, 50);
 });
