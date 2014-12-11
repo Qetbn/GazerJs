@@ -9,6 +9,7 @@ gazer.player = {};
  */
 gazer.player.current = {
     time: parseInt(gazer.utils.getTimestamp(), 10),
+    contentLoaded: false,
     status: "stop"
 };
 /**
@@ -24,7 +25,7 @@ gazer.player.ui = {
     player: {
         init: function () {
             this.element = $('#watch-player');
-            gazer.player.current.status = "play";
+            this.element.addClass('loading');
         },
         element: null
     },
@@ -49,17 +50,19 @@ gazer.player.ui = {
     window: {
         element: false,
         init: function (cb) {
-            this.element = $('#watch-player iframe:eq(0)');
+            this.element = $('<iframe />');
+            this.element.appendTo(gazer.player.ui.player.element);
             this.loadUrl(gazer.player.properties.url);
             /**
              * Perform callback if specified
              */
             if (typeof cb === "function") {
-                this.element.load(cb);
+                gazer.player.actions.contentLoaded();
+                this.element.on('load', cb);
             }
         },
         loadUrl: function (url) {
-            this.element.attr('src', url);
+            this.element.attr('src', url);//.get(0).contentDocument.location.reload(true);
         },
         resize: function (w, h) {
             this.element.css({
@@ -86,12 +89,10 @@ gazer.player.actions = {
         /**
          * Init UI
          */
-        gazer.player.ui.window.init(function(){
-            setTimeout(function(){
-                gazer.player.ui.player.init();
-                gazer.player.ui.mouse.init();
-            }, 2000);
-
+        gazer.player.ui.player.init();
+        gazer.player.ui.window.init(function () {
+            gazer.player.actions.play();
+            gazer.player.ui.mouse.init();
         });
 
     },
@@ -138,6 +139,19 @@ gazer.player.actions = {
         }
         this.tick();
         return true;
+    },
+    play: function() {
+        gazer.player.current.status = "play";
+    },
+    stop: function() {
+        gazer.player.current.status = "stop";
+    },
+    pause: function() {
+        gazer.player.current.status = "pause";
+    },
+    contentLoaded: function() {
+        gazer.player.ui.player.element.removeClass("loading");
+        gazer.player.current.contentLoaded = true;
     }
 };
 
@@ -158,6 +172,7 @@ $(function () {
     var filmLoop = setInterval(function () {
         var frame = gazer.player.frames[0];
         if (typeof frame === "undefined" || typeof frame.event === "undefined") {
+            gazer.player.actions.stop();
             clearInterval(filmLoop);
             return true;
         }
