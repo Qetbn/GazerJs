@@ -46,9 +46,20 @@ gazer.utils = {
      * @param sizesTo
      */
     translateCoords: function (sizesFrom, coordsFrom, sizesTo) {
-        return {
+        var coords = {
+            diffX: 0,
+            diffY: 0,
             x: Math.round(sizesTo.width * coordsFrom.x / sizesFrom.width),
             y: Math.round(sizesTo.height * coordsFrom.y / sizesFrom.height)
         };
+        if (coords.x > sizesTo.width) {
+            coords.diffX = sizesTo.width - coords.x;
+            coords.x = sizesTo.width;
+        }
+        if (coords.y > sizesTo.height) {
+            coords.diffY = sizesTo.height - coords.y;
+            coords.y = sizesTo.height;
+        }
+        return coords;
     }
 };

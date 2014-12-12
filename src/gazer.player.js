@@ -115,6 +115,7 @@ gazer.player.actions = {
             height: gazer.player.properties.height
         };
         var coords  = gazer.utils.translateCoords(sizesFrom, params.data, sizesTo);
+        this.scroll(coords, true);
         gazer.player.ui.mouse.move(coords.x, coords.y);
         this.tick();
         return true;
@@ -129,7 +130,13 @@ gazer.player.actions = {
         this.tick();
         return true;
     },
-    scroll: function (params) {
+    /**
+     * Scoll function
+     * @param params
+     * @boolean diff Compare with current. If true only adds positive offsets
+     * @returns {boolean}
+     */
+    scroll: function (params, diff) {
         console.log('scroll', params);
         this.tick();
         return true;
