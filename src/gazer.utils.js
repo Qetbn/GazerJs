@@ -47,8 +47,8 @@ gazer.utils = {
      */
     translateCoords: function (sizesFrom, coordsFrom, sizesTo) {
         return {
-            x: sizesTo.width * coordsFrom.x / sizesFrom.width,
-            y: sizesTo.height * coordsFrom.y / sizesFrom.height
+            x: Math.round(sizesTo.width * coordsFrom.x / sizesFrom.width),
+            y: Math.round(sizesTo.height * coordsFrom.y / sizesFrom.height)
         };
     }
 };
