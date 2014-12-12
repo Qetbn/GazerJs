@@ -138,6 +138,9 @@ gazer.player.actions = {
      */
     scroll: function (params, diff) {
         console.log('scroll', params);
+        if (typeof params.scrollTop !== "undefined") {
+            gazer.player.ui.window.element.scrollTop(params.scrollTop);
+        }
         this.tick();
         return true;
     },
