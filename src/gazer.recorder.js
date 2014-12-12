@@ -14,7 +14,7 @@ gazer.recorder.initProperties = function () {
     gazer.recorder.properties = {
         url: $(location).attr('href'),
         height: $(window).height(),
-        width: $(window).height(),
+        width: $(window).width(),
         navigator: $(navigator).attr('userAgent'),
         pageX: 0,
         pageY: 0,

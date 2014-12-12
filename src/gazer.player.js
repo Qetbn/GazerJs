@@ -104,9 +104,18 @@ gazer.player.actions = {
     mousemove: function (params) {
         console.log('mousemove', params);
         /**
-         * @todo: translate mouse coords via gazer.utils.translateCoords()
+         * Translate coords to current window size
          */
-        gazer.player.ui.mouse.move(params.data.x, params.data.y);
+        var sizesTo =  {
+            width: gazer.player.ui.window.element.width(),
+            height: gazer.player.ui.window.element.height()
+        };
+        var sizesFrom = {
+            width: gazer.player.properties.width,
+            height: gazer.player.properties.height
+        };
+        var coords  = gazer.utils.translateCoords(sizesFrom, params.data, sizesTo);
+        gazer.player.ui.mouse.move(coords.x, coords.y);
         this.tick();
         return true;
     },
