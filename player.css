@@ -11,9 +11,8 @@
 .watch-player-container {
     width: 640px;
     height: 480px;
-    overflow: auto;
-    overflow-y: hidden;
-    -ms-overflow-y: hidden;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 #watch-player-mouse {
     display: block;

@@ -124,8 +124,8 @@ gazer.player.actions = {
          * Translate coords to current window size
          */
         var sizesTo =  {
-            width: gazer.player.ui.window.element.width(),
-            height: gazer.player.ui.window.element.height()
+            width: gazer.player.ui.container.element.width(),
+            height: gazer.player.ui.container.element.height()
         };
         var sizesFrom = {
             width: gazer.player.properties.width,
@@ -155,8 +155,8 @@ gazer.player.actions = {
      */
     scroll: function (params, diff) {
         console.log('scroll', params);
-        if (typeof params.scrollTop !== "undefined") {
-            gazer.player.ui.window.element.scrollTop(params.scrollTop);
+        if (typeof params.data !== "undefined" && typeof params.data.scrollTop !== "undefined") {
+            gazer.player.ui.container.element.scrollTop(params.data.scrollTop);
         }
         this.tick();
         return true;
