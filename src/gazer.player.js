@@ -56,22 +56,27 @@ gazer.player.ui = {
         init: function() {
             this.element = $('<div />').addClass("watch-player-container");
             this.element.appendTo(gazer.player.ui.player.element);
-            this.loadUrl(gazer.player.properties.url);
         }
     },
     window: {
         element: false,
         init: function (cb) {
-            this.element = $('<iframe />');
-            this.element.appendTo(gazer.player.ui.container.element);
-            this.loadUrl(gazer.player.properties.url);
+            var self = this;
+            self.element = $('<iframe />').attr('scrolling', 'no');
+            self.element.appendTo(gazer.player.ui.container.element);
+            self.loadUrl(gazer.player.properties.url);
             /**
              * Perform callback if specified
              */
-            if (typeof cb === "function") {
+            this.element.on('load', function(){
                 gazer.player.actions.contentLoaded();
-                this.element.on('load', cb);
-            }
+                var height = self.element.contents().height();
+                self.element.css('height', height);
+                if (typeof cb === "function") {
+                    cb();
+                }    
+            });
+            
             return true;
         },
         loadUrl: function (url) {
@@ -106,7 +111,7 @@ gazer.player.actions = {
          * Init UI
          */
         gazer.player.ui.player.init();
-        gazer.player.ui.containe.init();
+        gazer.player.ui.container.init();
         gazer.player.ui.window.init(function () {
             gazer.player.actions.play();
             gazer.player.ui.mouse.init();
