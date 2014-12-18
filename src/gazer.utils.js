@@ -2,6 +2,9 @@
  * gazer.js util lib
  * @type {{getTimestamp: Function, getByteLength: Function}}
  */
+if (typeof gazer === "undefined") {
+    var gazer = {};
+}
 gazer.utils = {
     /**
      * Get timestam

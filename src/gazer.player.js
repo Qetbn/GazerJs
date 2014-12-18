@@ -1,6 +1,9 @@
 /**
  * gazer.js player lib
  */
+if (typeof gazer === "undefined") {
+    var gazer = {};
+}
 gazer.player = {};
 
 /**
@@ -48,11 +51,19 @@ gazer.player.ui = {
         },
         element: null
     },
+    container: {
+        element: false,
+        init: function() {
+            this.element = $('<div />').addClass("watch-player-container");
+            this.element.appendTo(gazer.player.ui.player.element);
+            this.loadUrl(gazer.player.properties.url);
+        }
+    },
     window: {
         element: false,
         init: function (cb) {
             this.element = $('<iframe />');
-            this.element.appendTo(gazer.player.ui.player.element);
+            this.element.appendTo(gazer.player.ui.container.element);
             this.loadUrl(gazer.player.properties.url);
             /**
              * Perform callback if specified
@@ -95,6 +106,7 @@ gazer.player.actions = {
          * Init UI
          */
         gazer.player.ui.player.init();
+        gazer.player.ui.containe.init();
         gazer.player.ui.window.init(function () {
             gazer.player.actions.play();
             gazer.player.ui.mouse.init();

@@ -1,6 +1,9 @@
 /**
  * gazer.js records
  */
+if (typeof gazer === "undefined") {
+    var gazer = {};
+}
 gazer.recorder = {};
 /**
  * Window propperties
