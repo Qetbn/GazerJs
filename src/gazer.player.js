@@ -49,6 +49,13 @@ gazer.player.ui = {
         destroy: function () {
             this.element.detach();
         },
+        click: function() {
+            this.element.addClass('click').delay(100).queue(function(next){
+                $(this).removeClass("click");
+                next();
+            });
+            return true;
+        },
         element: null
     },
     container: {
@@ -139,6 +146,7 @@ gazer.player.actions = {
     },
     click: function (params) {
         //console.log('click', params);
+        gazer.player.ui.mouse.click();
         this.tick();
         return true;
     },
