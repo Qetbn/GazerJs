@@ -56,11 +56,11 @@ gazer.utils = {
             y: Math.round(sizesTo.height * coordsFrom.y / sizesFrom.height)
         };
         if (coords.x > sizesTo.width) {
-            coords.diffX = sizesTo.width - coords.x;
+            coords.diffX = coords.x - sizesTo.width;
             coords.x = sizesTo.width;
         }
         if (coords.y > sizesTo.height) {
-            coords.diffY = sizesTo.height - coords.y;
+            coords.diffY = coords.y - sizesTo.height;
             coords.y = sizesTo.height;
         }
         return coords;

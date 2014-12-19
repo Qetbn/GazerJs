@@ -65,18 +65,18 @@ gazer.player.ui = {
             self.element = $('<iframe />').attr('scrolling', 'no');
             self.element.appendTo(gazer.player.ui.container.element);
             self.loadUrl(gazer.player.properties.url);
-            /**
-             * Perform callback if specified
-             */
             this.element.on('load', function(){
                 gazer.player.actions.contentLoaded();
                 var height = self.element.contents().height();
                 self.element.css('height', height);
+                /**
+                 * Perform callback if specified
+                 */
                 if (typeof cb === "function") {
                     cb();
-                }    
+                }
             });
-            
+
             return true;
         },
         loadUrl: function (url) {
@@ -119,7 +119,7 @@ gazer.player.actions = {
         return true;
     },
     mousemove: function (params) {
-        console.log('mousemove', params);
+        //console.log('mousemove', params);
         /**
          * Translate coords to current window size
          */
@@ -138,12 +138,12 @@ gazer.player.actions = {
         return true;
     },
     click: function (params) {
-        console.log('click', params);
+        //console.log('click', params);
         this.tick();
         return true;
     },
     keypress: function (params) {
-        console.log('keypress', params);
+        //console.log('keypress', params);
         this.tick();
         return true;
     },
@@ -154,9 +154,17 @@ gazer.player.actions = {
      * @returns {boolean}
      */
     scroll: function (params, diff) {
-        console.log('scroll', params);
         if (typeof params.data !== "undefined" && typeof params.data.scrollTop !== "undefined") {
             gazer.player.ui.container.element.scrollTop(params.data.scrollTop);
+        } else if (diff === true) {
+            /**
+             * @todo: strange behavior here
+             * this basically must scroll window to mouse position if its out of bounds of current window container
+             */
+            console.log(gazer.player.ui.container.element.scrollTop(), params.diffY);
+            gazer.player.ui.container.element.scrollTop(
+                gazer.player.ui.container.element.scrollTop() + params.diffY
+            );
         }
         this.tick();
         return true;
