@@ -1,5 +1,6 @@
 # GazerJs
-## User action tracking library.
+*User action tracking library.*
+
 This goal of GazerJs is to create lightweight library which tracks user behavior on your page.
 
 GazerJs consists of two parts:
