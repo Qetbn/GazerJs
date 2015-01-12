@@ -46,7 +46,10 @@ $(function () {
          */
         gazer.recorder.pushFrame({
             event: 'click',
-            date: gazer.utils.getTimestamp()
+            date: gazer.utils.getTimestamp(),
+            data: {
+                target: gazer.utils.getPath($(e.target))
+            }
         });
     });
     /**
@@ -71,6 +74,28 @@ $(function () {
             }
         });
     });
+    /**
+     * Focus
+     */
+     $(document).on('focus', 'input, a, button', function (e) {
+        /**
+         * Do not track passwords
+         */
+        if ($(e.target).prop('type') === "password") {
+            return true;
+        }
+        /**
+         * Add a frame with 'keypress' event
+         */
+        gazer.recorder.pushFrame({
+            event: 'focus',
+            date: gazer.utils.getTimestamp(),
+            data: {
+                target: gazer.utils.getPath($(e.target))
+            }
+        });
+    });
+     
     /**
      * Mouse movement analytics
      */
