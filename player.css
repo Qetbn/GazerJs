@@ -22,11 +22,14 @@
     width: 15px;
     border-radius: 50%;
     padding: 10px;
-    background: url('img/cursor.png') no-repeat #fff 50% 50%;
+	background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAATCAYAAABGKffQAAAAdUlEQVQoU5WSOxLAIAgFoZX7H5WawEzIROWjNDa7KPIQEUUL4aAMkpdrBW2MwsxARNDd8MHWvRMmuBM2uBJCOBNSOBJKeBVa+C+k8Bhj2qmCsP2zLagd0BfiGw0HXLNRwlHqMiFM2hVs742ENMNXsHe303P+AOCfhRbpIj1FAAAAAElFTkSuQmCC');
+	background-repeat: no-repeat;
+	background-color: #fff;
+	background-position: 50% 50%;
     transition: all 1s ease;
 }
 #watch-player-mouse.click {
-    background: url('img/cursor.png') no-repeat #F02020 50% 50%;
+    background-color: #F02020;
     border: 2px solid #999;
     transition: all 0.3s ease;
     -webkit-box-shadow: 5px 5px 10px 3px #999;
