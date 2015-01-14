@@ -1,5 +1,5 @@
 /**
- * gazer.js player lib
+ * GazerJs player lib
  */
 if (typeof gazer === "undefined") {
     var gazer = {};

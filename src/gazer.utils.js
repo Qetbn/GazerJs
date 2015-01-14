@@ -1,5 +1,5 @@
 /**
- * gazer.js util lib
+ * GazerJs util lib
  * @type {{getTimestamp: Function, getByteLength: Function}}
  */
 if (typeof gazer === "undefined") {

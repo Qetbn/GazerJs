@@ -1,3 +1,10 @@
+/**
+ * GazerJs storage manager
+ */
+if (typeof gazer === "undefined") {
+    var gazer = {};
+}
+
 gazer.recorder.storageManager = {
     apiUrl: "/api.php",
     lastItem: "",

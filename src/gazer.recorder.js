@@ -1,11 +1,10 @@
 /**
- * gazer.js records
+ * GazerJs recorder
  */
 if (typeof gazer === "undefined") {
     var gazer = {};
 }
-gazer.recorder = {
-};
+gazer.recorder = {};
 /**
  * Window propperties
  */
