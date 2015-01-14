@@ -9,7 +9,19 @@ $(function () {
         date: gazer.utils.getTimestamp(),
         data: gazer.recorder.properties
     });
-
+    /**
+     * Window Resize
+     */
+    $(window).resize(function() {
+        gazer.recorder.pushFrame({
+            event: 'resize',
+            date: gazer.utils.getTimestamp(),
+            data: {
+                height: $(window).height(),
+                width: $(window).width()   
+            }
+        });
+    });
     /**
      * Mouse move
      */
@@ -19,7 +31,7 @@ $(function () {
         return true;
     });
     /**
-     * Window scoll
+     * Document scoll
      */
     $(document).on('scroll', function () {
         gazer.recorder.properties.scrollTop = $(document).scrollTop();

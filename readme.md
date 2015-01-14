@@ -10,6 +10,7 @@ GazerJs consists of two parts:
 Recorder can be used only on tracked host due browser security policies.
 It tracks only following events:
 * Document ready
+* Window resize
 * Mousemove
 * Mousedown
 * Scroll
