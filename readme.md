@@ -8,3 +8,11 @@ GazerJs consists of two parts:
 * Player
 
 Recorder can be used only on tracked host due browser security policies.
+It tracks only following events:
+* Document ready
+* Mousemove
+* Mousedown
+* Scroll
+* Keydown
+* Change (Input, Select, Textarea)
+* Focus (Input, Select, Textarea, A, Button)
