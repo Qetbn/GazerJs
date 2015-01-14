@@ -74,14 +74,38 @@ $(function () {
             }
         });
     });
+    
     /**
-     * Focus
+     * Change value
      */
-     $(document).on('focus', 'input, a, button', function (e) {
+     $(document).on('change', 'input, select, textarea', function (e) {
         /**
          * Do not track passwords
          */
-        if ($(e.target).prop('type') === "password") {
+        if ($(e.target).prop("tagName") == "INPUT" && $(e.target).prop('type') === "password") {
+            return true;
+        }
+        /**
+         * Add a frame with 'keypress' event
+         */
+        gazer.recorder.pushFrame({
+            event: 'change',
+            date: gazer.utils.getTimestamp(),
+            data: {
+                value: $(e.target).val(),
+                target: gazer.utils.getPath($(e.target))
+            }
+        });
+    });
+     
+    /**
+     * Focus
+     */
+     $(document).on('focus', 'input, a, button, select, textarea', function (e) {
+        /**
+         * Do not track passwords
+         */
+        if ($(e.target).prop("tagName") == "INPUT" && $(e.target).prop('type') === "password") {
             return true;
         }
         /**
