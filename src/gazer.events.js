@@ -131,7 +131,28 @@ $(function () {
             }
         });
     });
-     
+    /**
+     * Text selection
+     */
+    $(document).on('mouseup', function (e) {
+        var selectedText = "";
+        if (window.getSelection) {
+            selectedText =  window.getSelection().toString();
+        } else if (document.selection) {
+            selectedText = document.selection.createRange().text;
+        }
+        if (selectedText.length > 0) {
+           var node = window.getSelection ? window.getSelection().focusNode.parentNode: document.selection.createRange().parentElement();
+            gazer.recorder.pushFrame({
+                event: 'select',
+                date: gazer.utils.getTimestamp(),
+                data: {
+                    text: selectedText,
+                    target: gazer.utils.getPath($(node))
+                }
+            }); 
+        }
+    });
     /**
      * Mouse movement analytics
      */

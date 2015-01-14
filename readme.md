@@ -17,3 +17,4 @@ It tracks only following events:
 * Keydown
 * Change (Input, Select, Textarea)
 * Focus (Input, Select, Textarea, A, Button)
+* Text selection
