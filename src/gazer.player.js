@@ -241,7 +241,9 @@ $(function () {
         if (gazer.player.current.status !== "play" && frame.event != "init") {
             return true;
         }
-        gazer.player.actions[frame.event](frame);
+        if (typeof gazer.player.actions[frame.event] === "function") {
+            gazer.player.actions[frame.event](frame);
+        }
         gazer.player.actions.cutFramesByDelta();
         tick++;
         return true;
