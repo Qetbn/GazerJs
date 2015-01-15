@@ -6,7 +6,7 @@ if (typeof gazer === "undefined") {
 }
 
 gazer.recorder.storageManager = {
-    apiUrl: "/api.php",
+    apiUrl: "/demo/api.php",
     lastItem: "",
     /**
      * Send whole data to server
