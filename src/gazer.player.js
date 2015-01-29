@@ -183,6 +183,11 @@ gazer.player.actions = {
         this.tick();
         return true;
     },
+    updateDeltas: function () {
+        this.tick();
+        gazer.player.current.delta = gazer.player.current.time - gazer.player.current.filmTime;
+        return true;  
+    },
     tick: function () {
         gazer.player.current.time = parseInt(gazer.utils.getTimestamp(), 10);
         return true;
@@ -202,6 +207,7 @@ gazer.player.actions = {
         return true;
     },
     play: function() {
+        gazer.player.actions.updateDeltas();
         gazer.player.current.status = "play";
     },
     stop: function() {
@@ -218,8 +224,8 @@ gazer.player.actions = {
 };
 
 $(function () {
-    var history = $('#history').text();
-    script = $('#page-watch-script');
+    var history = $('#history').text(),
+        script = $('#page-watch-script');
     /**
      * Parse frames
      */
