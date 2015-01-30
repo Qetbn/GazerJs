@@ -16,8 +16,10 @@ gazer.recorder.initProperties = function () {
     var script = $('#page-gazer-script');
     gazer.recorder.properties = {
         url: $(location).attr('href'),
-        height: $(window).height(),
-        width: $(window).width(),
+        wHeight: $(window).height(),
+        wWidth: $(window).width(),
+        dHeight: $(document).height(),
+        dWidth: $(document).width(),
         navigator: $(navigator).attr('userAgent'),
         pageX: 0,
         pageY: 0,

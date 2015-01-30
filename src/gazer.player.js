@@ -126,7 +126,6 @@ gazer.player.actions = {
         return true;
     },
     mousemove: function (params) {
-        //console.log('mousemove', params);
         /**
          * Translate coords to current window size
          */
@@ -135,8 +134,8 @@ gazer.player.actions = {
             height: gazer.player.ui.container.element.height()
         };
         var sizesFrom = {
-            width: gazer.player.properties.width,
-            height: gazer.player.properties.height
+            width: gazer.player.properties.dWidth,
+            height: gazer.player.properties.dHeight
         };
         var coords  = gazer.utils.translateCoords(sizesFrom, params.data, sizesTo);
         this.scroll(coords, true);
@@ -166,10 +165,8 @@ gazer.player.actions = {
             gazer.player.ui.container.element.scrollTop(params.data.scrollTop);
         } else if (diff === true) {
             /**
-             * @todo: strange behavior here
-             * this basically must scroll window to mouse position if its out of bounds of current window container
+             * scrolls window to mouse position if its out of bounds of current window container
              */
-            console.log(gazer.player.ui.container.element.scrollTop(), params.diffY);
             gazer.player.ui.container.element.scrollTop(
                 gazer.player.ui.container.element.scrollTop() + params.diffY
             );
