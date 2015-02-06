@@ -33,6 +33,23 @@ gazer.player.ui = {
         },
         element: null
     },
+    story: {
+        element: false,
+        progressBar: false,
+        progress: 0,
+        init: function() {
+            this.element = $('<div />').addClass("watch-story-container");
+            this.progressBar  = $('<div />').addClass("watch-progressbar");
+            this.element.appendTo(gazer.player.ui.player.element);
+            this.progressBar.appendTo(this.element);
+        },
+        setProgress: function(p) {
+            this.progress = p;
+            if (this.progressBar !== false) {
+                this.progressBar.css({'left': p});
+            }
+        }
+    },
     mouse: {
         init: function () {
             this.element = $('<div id="watch-player-mouse"/>');
@@ -112,6 +129,7 @@ gazer.player.ui = {
 gazer.player.actions = {
     init: function (params) {
         gazer.player.properties = params.data;
+        gazer.player.framesCount = gazer.player.frames.length;
         params.date = parseInt(params.date, 10);
         this.setTickTime(params.date);
         /**
@@ -122,6 +140,7 @@ gazer.player.actions = {
         gazer.player.ui.window.init(function () {
             gazer.player.actions.play();
             gazer.player.ui.mouse.init();
+            gazer.player.ui.story.init();
         });
         return true;
     },
@@ -187,6 +206,7 @@ gazer.player.actions = {
     },
     tick: function () {
         gazer.player.current.time = parseInt(gazer.utils.getTimestamp(), 10);
+        gazer.player.ui.story.setProgress(gazer.player.framesCount * gazer.player.frames.length / 100);
         return true;
     },
     cutFramesByDelta: function () {
@@ -245,6 +265,7 @@ $(function () {
             return true;
         }
         if (typeof gazer.player.actions[frame.event] === "function") {
+            console.log(frame.event, frame);
             gazer.player.actions[frame.event](frame);
         }
         gazer.player.actions.cutFramesByDelta();

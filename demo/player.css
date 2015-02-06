@@ -38,3 +38,14 @@
 #history {
     display: none;
 }
+.watch-story-container {
+    height: 120px;
+    border: 1px solid #333;
+    position: relative;
+}
+.watch-progressbar {
+    height: 120px;
+    position:absolute;
+    background: #333;
+    width: 2px;
+}
